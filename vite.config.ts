@@ -8,6 +8,7 @@ export default defineConfig({
   plugins: [
     vue(),
   ],
+  base: "/vue-pokedex-v2/",
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
