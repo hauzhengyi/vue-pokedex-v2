@@ -1,35 +1,44 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import type { apiState } from '@/types/api'
-import type { listType, listItemType } from '@/types/common'
-import api from '@/services/api'
+import type { ApiState } from '@/types/api'
+import type { ListType } from '@/types/common'
+import { fetchData } from '@/composables/useFetchData'
 
 export const usePokemonStore = defineStore('pokemon', () => {
-  const pokemonList = ref<apiState<listType[]>>({
-    data: [],
+  // ===================== Pokemon List ===================== //
+  const pokemonList = ref<ApiState<ListType>>({
+    data: null,
     loading: false,
+    success: false,
     error: null,
   })
 
   const getPokemonList = computed(() => pokemonList.value)
 
-  const fetchPokemonList = async () => {
-    pokemonList.value.loading = true
-
-    try {
-      const response = await api.getData('/pokemon')
-      pokemonList.value.data = response.data
-      pokemonList.value.error = null
-    } catch (err) {
-      pokemonList.value.error =
-        err instanceof Error ? err.message : 'An unexpected error occurred'
-    } finally {
-      pokemonList.value.loading = false
-    }
+  const fetchPokemonList = () => {
+    fetchData(pokemonList, '/pokemon')
   }
+  // ===================== Pokemon List ===================== //
+
+  // ===================== Pokemon Database ===================== //
+  const pokemonDatabase = ref<ApiState<ListType>>({
+    data: null,
+    loading: false,
+    success: false,
+    error: null,
+  })
+
+  const getPokemonDatabase = computed(() => pokemonDatabase.value)
+
+  const fetchPokemonDatabase = () => {
+    fetchData(pokemonDatabase, '/pokemon')
+  }
+  // ===================== Pokemon Database ===================== //
 
   return {
     getPokemonList,
     fetchPokemonList,
+    getPokemonDatabase,
+    fetchPokemonDatabase,
   }
 })

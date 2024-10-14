@@ -1,6 +1,6 @@
 <template>
   <main>
-    {{ pokemonList }}
+    {{ pokemonStore.getPokemonList.data }}
   </main>
 </template>
 
@@ -9,8 +9,6 @@ import { onMounted } from 'vue'
 import { usePokemonStore } from '@/stores/pokemon'
 
 const pokemonStore = usePokemonStore()
-
-const pokemonList = pokemonStore.getPokemonList
 
 onMounted(() => {
   pokemonStore.fetchPokemonList()

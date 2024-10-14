@@ -1,11 +1,11 @@
-export type listType = {
+export type ListType = {
   count: number
   next: string | null
   previous: string | null
-  results: listItemType[]
+  results: ListItemType[]
 }
 
-export type listItemType = {
+export type ListItemType = {
   name: string
   url: string
 }

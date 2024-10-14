@@ -1,5 +1,6 @@
-export type apiState<T> = {
-  data: T
+export type ApiState<T> = {
+  data: T | null
   loading: boolean
+  success: boolean
   error: string | null
 }
