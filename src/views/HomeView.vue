@@ -11,6 +11,6 @@ import { usePokemonStore } from '@/stores/pokemon'
 const pokemonStore = usePokemonStore()
 
 onMounted(() => {
-  pokemonStore.fetchPokemonList()
+  pokemonStore.fetchPokemonList(0, 20)
 })
 </script>

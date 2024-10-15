@@ -8,7 +8,16 @@ const apiClient = axios.create({
 })
 
 export default {
-  getData(path: string) {
-    return apiClient.get(path)
+  getData(path: string, params: Record<string, any> = {}) {
+    return apiClient.get(path, { params })
+  },
+
+  getExternalData(fullUrl: string, params: Record<string, any> = {}) {
+    return axios.get(fullUrl, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params,
+    })
   },
 }

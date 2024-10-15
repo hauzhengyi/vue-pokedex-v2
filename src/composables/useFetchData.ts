@@ -2,19 +2,17 @@ import type { Ref } from 'vue'
 import type { ApiState } from '@/types/api'
 import api from '@/services/apiService'
 
-/**
- * A reusable composable function to fetch data from an API and update the reactive state.
- * @param refValue - A Ref that holds the apiState object.
- * @param url - The endpoint URL for the API call.
- */
-
-export const fetchData = async (refValue: Ref<ApiState<any>>, url: string) => {
+export const fetchData = async (
+  refValue: Ref<ApiState<any>>,
+  url: string,
+  params: Record<string, any> = {},
+) => {
   // Set loading state to true
   refValue.value.loading = true
 
   try {
     // Perform the API call
-    const response = await api.getData(url)
+    const response = await api.getData(url, params)
 
     // Update ref value with the fetched data
     refValue.value.data = response.data
