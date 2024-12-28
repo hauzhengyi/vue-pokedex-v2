@@ -1,5 +1,5 @@
 type ApiState<T> = {
-  data: T | null
+  data: T | undefined
   loading: boolean
   success: boolean
   error: string | null

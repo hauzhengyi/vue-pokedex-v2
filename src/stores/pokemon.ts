@@ -7,7 +7,7 @@ export const usePokemonStore = defineStore('pokemon', () => {
   */
 
   const pokemonIndexList = ref<ApiState<IndexList>>({
-    data: null,
+    data: undefined,
     loading: false,
     success: false,
     error: null,
@@ -39,10 +39,23 @@ export const usePokemonStore = defineStore('pokemon', () => {
   const getPokemonDatabase = computed(() => pokemonDatabase.value)
 
   const populatePokemonDatabase = (): void => {
+    if (pokemonDatabase.value.length <= 0)
+      initDatabaseSize(pokemonIndexList.value.data?.count)
+
     pokemonIndexList.value.data?.results.map(pokemon => {
       let id: number = parseInt(pokemon.url.split('/').slice(-2, -1)[0])
       if (pokemonDataExists(id)) return
       else fetchPokemonData(id)
+    })
+  }
+
+  const initDatabaseSize = (size: number | undefined): void => {
+    if (size == undefined) return
+    pokemonDatabase.value = Array(size).fill({
+      data: null,
+      loading: false,
+      success: false,
+      error: null,
     })
   }
 
@@ -53,7 +66,7 @@ export const usePokemonStore = defineStore('pokemon', () => {
 
   const fetchPokemonData = async (id: number): Promise<void> => {
     const pokemon = ref<ApiState<Pokemon>>({
-      data: null,
+      data: undefined,
       loading: false,
       success: false,
       error: null,
