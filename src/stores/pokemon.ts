@@ -1,5 +1,11 @@
 export const usePokemonStore = defineStore('pokemon', () => {
   // ===================== Pokemon Index List ===================== //
+
+  /*
+  An index list only shows you a list of Pokemon names and their id,
+  along with the link to get each Pokemon's full detail.
+  */
+
   const pokemonIndexList = ref<ApiState<IndexList>>({
     data: null,
     loading: false,
@@ -22,7 +28,13 @@ export const usePokemonStore = defineStore('pokemon', () => {
   // ===================== Pokemon Index List ===================== //
 
   // ===================== Pokemon Database ===================== //
-  const pokemonDatabase = ref<Pokemon[]>([])
+
+  /*
+  Each Pokemon's detail is stored in here, to minimize repeated API calls,
+  check if the Pokemon's detail already exists before fetching.
+  */
+
+  const pokemonDatabase = ref<ApiState<Pokemon>[]>([])
 
   const getPokemonDatabase = computed(() => pokemonDatabase.value)
 
@@ -34,14 +46,24 @@ export const usePokemonStore = defineStore('pokemon', () => {
     })
   }
 
-  const fetchPokemonData = (id: number): void => {
+  const pokemonDataExists = (id: number): boolean => {
     let index: number = id - 1
+    return pokemonDatabase.value[index]?.success
   }
 
-  const pokemonDataExists = (id: number): Pokemon => {
+  const fetchPokemonData = async (id: number): Promise<void> => {
+    const pokemon = ref<ApiState<Pokemon>>({
+      data: null,
+      loading: false,
+      success: false,
+      error: null,
+    })
+    await fetchAndSetState(pokemon, `/pokemon/${id}`)
+
     let index: number = id - 1
-    return pokemonDatabase.value[index]
+    pokemonDatabase.value[index] = pokemon.value
   }
+
   // ===================== Pokemon Database ===================== //
 
   return {

@@ -1,14 +1,8 @@
 <template>
-  <main>
-    <Test />
-    {{ pokemonStore.getPokemonIndexList.data }}
+  <main class="container">
+    <h1>Pokedex V2</h1>
+    <PokemonCardList />
   </main>
 </template>
 
-<script setup lang="ts">
-const pokemonStore = usePokemonStore()
-
-onMounted(() => {
-  pokemonStore.fetchPokemonIndexList(0, 20)
-})
-</script>
+<script setup lang="ts"></script>
