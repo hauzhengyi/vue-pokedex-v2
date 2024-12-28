@@ -1,6 +1,4 @@
-import type { ListItemType } from '@/types/common'
-
-export type Pokemon = {
+type Pokemon = {
   id: number
   name: string
   order: number
@@ -10,26 +8,26 @@ export type Pokemon = {
   types: PokemonType[]
   stats: PokemonStat[]
   abilities: PokemonAbility[]
-  forms: ListItemType[]
-  species: ListItemType
+  forms: IndexList[]
+  species: IndexList
   sprites: Sprites
 }
 
 type PokemonType = {
   slot: number
-  type: ListItemType
+  type: IndexList
 }
 
 type PokemonStat = {
   base_stat: number
   effort: number
-  stat: ListItemType
+  stat: IndexList
 }
 
 type PokemonAbility = {
   slot: number
   is_hidden: boolean
-  ability: ListItemType
+  ability: IndexList
 }
 
 type Sprites = {}

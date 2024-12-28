@@ -1,8 +1,4 @@
-import type { Ref } from 'vue'
-import type { ApiState } from '@/types/api'
-import api from '@/services/apiService'
-
-export const fetchData = async (
+export const fetchAndSetState = async (
   refValue: Ref<ApiState<any>>,
   url: string,
   params: Record<string, any> = {},
@@ -12,7 +8,7 @@ export const fetchData = async (
 
   try {
     // Perform the API call
-    const response = await api.getData(url, params)
+    const response = await fetchAPI(url, params)
 
     // Update ref value with the fetched data
     refValue.value.data = response.data

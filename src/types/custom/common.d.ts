@@ -1,11 +1,11 @@
-export type ListType = {
+type IndexList = {
   count: number
   next: string | null
   previous: string | null
-  results: ListItemType[]
+  results: Index[]
 }
 
-export type ListItemType = {
+type Index = {
   name: string
   url: string
 }
