@@ -5,15 +5,15 @@
       <li
         class="card"
         v-for="pokemon in paginatedPokemonDatabase"
-        :key="pokemon.value.data?.id"
+        :key="pokemon?.value.data?.id"
       >
         <img
           class="image"
-          :src="pokemon.value.data?.sprites.other.home.front_default"
-          :alt="pokemon.value.data?.name"
+          :src="pokemon?.value.data?.sprites.other.home.front_default"
+          :alt="pokemon?.value.data?.name"
         />
         <div class="name">
-          {{ pokemon.value.data?.name }}
+          {{ pokemon?.value.data?.name }}
         </div>
       </li>
     </ul>

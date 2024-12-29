@@ -47,21 +47,24 @@ export const usePokemonStore = defineStore('pokemon', () => {
 
   const initDatabaseSize = (size: number | undefined): void => {
     if (size == undefined) return
-    pokemonDatabase.value = Array(size).fill({
-      data: null,
-      loading: false,
-      success: false,
-      error: null,
-    })
+    pokemonDatabase.value = Array(size).fill(undefined)
   }
 
   const pokemonDataExists = (id: number): boolean => {
-    let index: number = id - 1
-    return pokemonDatabase.value[index].value?.success
+    const index = id - 1
+    return index >= 0 && index < pokemonDatabase.value.length
+      ? pokemonDatabase.value[index]?.value?.success
+      : false
   }
 
   const fetchPokemonData = async (id: number): Promise<void> => {
     let index: number = id - 1
+
+    if (index < 0 || index >= pokemonDatabase.value.length) {
+      console.error(`Index ${index} is out of bounds`)
+      return
+    }
+
     pokemonDatabase.value[index] = ref<ApiState<Pokemon>>({
       data: undefined,
       loading: false,
