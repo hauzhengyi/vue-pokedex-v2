@@ -32,7 +32,7 @@ export const usePokemonStore = defineStore('pokemon', () => {
   check if the Pokemon's detail already exists before fetching.
   */
 
-  const pokemonDatabase = ref<ApiState<Pokemon>[]>([])
+  const pokemonDatabase = ref<Ref<ApiState<Pokemon>>[]>([])
 
   const populatePokemonDatabase = (): void => {
     if (pokemonDatabase.value.length <= 0)
@@ -57,20 +57,19 @@ export const usePokemonStore = defineStore('pokemon', () => {
 
   const pokemonDataExists = (id: number): boolean => {
     let index: number = id - 1
-    return pokemonDatabase.value[index]?.success
+    return pokemonDatabase.value[index].value?.success
   }
 
   const fetchPokemonData = async (id: number): Promise<void> => {
-    const pokemon = ref<ApiState<Pokemon>>({
+    let index: number = id - 1
+    pokemonDatabase.value[index] = ref<ApiState<Pokemon>>({
       data: undefined,
       loading: false,
       success: false,
       error: null,
     })
-    await fetchAndSetState(pokemon, `/pokemon/${id}`)
 
-    let index: number = id - 1
-    pokemonDatabase.value[index] = pokemon.value
+    await fetchAndSetState(pokemonDatabase.value[index], `/pokemon/${id}`)
   }
 
   // ===================== Pokemon Database ===================== //
