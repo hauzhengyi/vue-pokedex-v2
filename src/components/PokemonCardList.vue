@@ -4,7 +4,7 @@
     <ul class="cardList">
       <li
         class="card"
-        v-for="pokemon in pokemonStore.pokemonDatabase"
+        v-for="pokemon in paginatedPokemonDatabase"
         :key="pokemon.data?.id"
       >
         <img
@@ -21,10 +21,16 @@
 </template>
 
 <script setup lang="ts">
+const pageSize = ref(20)
+const pageOffset = ref(0)
+
 const pokemonStore = usePokemonStore()
+const paginatedPokemonDatabase = computed(() =>
+  pokemonStore.pokemonDatabase.slice(pageOffset.value, pageSize.value),
+)
 
 onMounted(() => {
-  pokemonStore.fetchPokemonIndexList(0, 20)
+  pokemonStore.fetchPokemonIndexList(pageOffset.value, pageSize.value)
 })
 </script>
 
