@@ -47,7 +47,14 @@ export const usePokemonStore = defineStore('pokemon', () => {
 
   const initDatabaseSize = (size: number | undefined): void => {
     if (size == undefined) return
-    pokemonDatabase.value = Array(size).fill(undefined)
+    pokemonDatabase.value = Array.from({ length: size }, () =>
+      ref<ApiState<Pokemon>>({
+        data: undefined,
+        loading: false,
+        success: false,
+        error: null,
+      }),
+    )
   }
 
   const pokemonDataExists = (id: number): boolean => {
