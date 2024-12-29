@@ -4,7 +4,7 @@
     <ul class="cardList">
       <li
         class="card"
-        v-for="pokemon in pokemonStore.getPokemonDatabase"
+        v-for="pokemon in pokemonStore.pokemonDatabase"
         :key="pokemon.data?.id"
       >
         <img

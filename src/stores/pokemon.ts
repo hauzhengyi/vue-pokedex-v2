@@ -13,8 +13,6 @@ export const usePokemonStore = defineStore('pokemon', () => {
     error: null,
   })
 
-  const getPokemonIndexList = computed(() => pokemonIndexList.value)
-
   const fetchPokemonIndexList = async (
     offset?: number,
     limit?: number,
@@ -35,8 +33,6 @@ export const usePokemonStore = defineStore('pokemon', () => {
   */
 
   const pokemonDatabase = ref<ApiState<Pokemon>[]>([])
-
-  const getPokemonDatabase = computed(() => pokemonDatabase.value)
 
   const populatePokemonDatabase = (): void => {
     if (pokemonDatabase.value.length <= 0)
@@ -80,8 +76,8 @@ export const usePokemonStore = defineStore('pokemon', () => {
   // ===================== Pokemon Database ===================== //
 
   return {
-    getPokemonIndexList,
+    pokemonIndexList,
     fetchPokemonIndexList,
-    getPokemonDatabase,
+    pokemonDatabase,
   }
 })
